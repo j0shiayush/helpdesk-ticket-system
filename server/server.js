@@ -1,6 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const cors = require('cors');
+const cors = require('cors'); // Ensure this is imported
 const connectDB = require('./config/db');
 
 // Load environment variables
@@ -11,12 +11,14 @@ connectDB();
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// Middleware - MUST BE BEFORE ROUTES
+app.use(cors({
+    origin: 'http://localhost:5173', // Allow your React frontend
+    credentials: true
+}));
 app.use(express.json());
 
 // Mount Routes
-app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/tickets', require('./routes/ticketRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));

@@ -1,0 +1,51 @@
+import React, { createContext, useState, useEffect } from 'react';
+import api from '../api/axios';
+
+export const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Check if user is already logged in on mount
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (localStorage.getItem('token')) {
+        try {
+          const { data } = await api.get('/auth/me');
+          setUser(data.user);
+        } catch (error) {
+          console.error("Token invalid or expired");
+          localStorage.removeItem('token');
+        }
+      }
+      setLoading(false);
+    };
+    fetchUser();
+  }, []);
+
+  const login = async (email, password) => {
+    const { data } = await api.post('/auth/login', { email, password });
+    localStorage.setItem('token', data.token);
+    setUser(data.user);
+    return data.user;
+  };
+
+  const register = async (name, email, password) => {
+    const { data } = await api.post('/auth/register', { name, email, password });
+    localStorage.setItem('token', data.token);
+    setUser(data.user);
+    return data.user;
+  };
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    setUser(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
+};
