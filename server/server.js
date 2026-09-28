@@ -17,6 +17,9 @@ app.use(express.json());
 
 // Mount Routes
 app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/tickets', require('./routes/ticketRoutes'));
+app.use('/api/admin', require('./routes/adminRoutes'));
 
 // Test Route
 app.get('/', (req, res) => {
