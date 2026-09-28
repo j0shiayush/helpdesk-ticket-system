@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const connectDB = require('./config/db');
 
 // Load environment variables
@@ -10,10 +11,14 @@ connectDB();
 
 const app = express();
 
-// Middleware to parse JSON
+// Middleware
+app.use(cors());
 app.use(express.json());
 
-// Basic test route
+// Mount Routes
+app.use('/api/auth', require('./routes/authRoutes'));
+
+// Test Route
 app.get('/', (req, res) => {
   res.send('Helpdesk API is running...');
 });
