@@ -74,4 +74,13 @@ JWT_EXPIRES_IN=7d
 * `GET /api/admin/stats` - Get ticket statistics (Protected, Admin only)
 
 ## Screenshots
-*(Remember to add screenshots of your Login, User Dashboard, Ticket Creation Form, and Admin Dashboard here before submitting)*
+<img width="1920" height="930" alt="image" src="https://github.com/user-attachments/assets/043bf98a-4259-4a95-8832-864b229cfe1e" />
+<img width="1920" height="925" alt="image" src="https://github.com/user-attachments/assets/3d29bde6-a37f-4427-91f8-2757ca871b1a" />
+<img width="1920" height="928" alt="image" src="https://github.com/user-attachments/assets/a6a8d86b-faf9-4376-af18-c9259976c2c7" />
+<img width="1920" height="925" alt="image" src="https://github.com/user-attachments/assets/f78a403b-246b-4075-a510-3aa53125a646" />
+<img width="1920" height="933" alt="image" src="https://github.com/user-attachments/assets/a64e757d-2c3d-41fa-920c-168bc4745085" />
+
+
+
+
+
