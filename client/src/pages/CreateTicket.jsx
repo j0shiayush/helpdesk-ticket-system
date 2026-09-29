@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import api from '../api/axios';
 import { useNavigate, Link } from 'react-router-dom';
@@ -15,7 +15,6 @@ const CreateTicket = () => {
     setApiError('');
     try {
       await api.post('/tickets', data);
-      navigate('/dashboard'); // Go back to dashboard on success
     } catch (error) {
       setApiError(error.response?.data?.message || 'Failed to create ticket');
     } finally {

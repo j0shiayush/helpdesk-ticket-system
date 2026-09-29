@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../api/axios';
 import Navbar from '../components/Navbar';
 
@@ -7,7 +7,6 @@ const AdminDashboard = () => {
   const [stats, setStats] = useState({ total: 0, open: 0, inProgress: 0, resolved: 0 });
   const [loading, setLoading] = useState(true);
 
-  // Filter States
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState('');
   const [priority, setPriority] = useState('');
@@ -15,17 +14,14 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      // Fetch Dashboard Statistics
       const statsRes = await api.get('/admin/stats');
       setStats(statsRes.data.data);
 
-      // Construct Query Parameters for Filtering/Searching
       const queryParams = new URLSearchParams();
       if (status) queryParams.append('status', status);
       if (priority) queryParams.append('priority', priority);
       if (search) queryParams.append('search', search);
 
-      // Fetch Filtered Tickets
       const ticketsRes = await api.get(`/admin/tickets?${queryParams.toString()}`);
       setTickets(ticketsRes.data.data);
     } catch (error) {
@@ -35,22 +31,19 @@ const AdminDashboard = () => {
     }
   };
 
-  // Re-fetch data whenever dropdown filters change
   useEffect(() => {
     fetchData();
   }, [status, priority]);
 
-  // Handle manual search submission
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     fetchData();
   };
 
-  // Inline status update
   const handleStatusChange = async (id, newStatus) => {
     try {
       await api.put(`/admin/tickets/${id}`, { status: newStatus });
-      fetchData(); // Refresh list and stats to reflect the change
+      fetchData(); 
     } catch (error) {
       console.error("Error updating ticket status", error);
     }
@@ -62,7 +55,6 @@ const AdminDashboard = () => {
       <div className="container admin-container">
         <h2>Admin Dashboard</h2>
         
-        {/* Statistics Metric Cards */}
         <div className="stats-grid">
           <div className="stat-card"><h3>Total</h3><p>{stats.total || 0}</p></div>
           <div className="stat-card open"><h3>Open</h3><p>{stats.open || 0}</p></div>
@@ -70,7 +62,6 @@ const AdminDashboard = () => {
           <div className="stat-card resolved"><h3>Resolved</h3><p>{stats.resolved || 0}</p></div>
         </div>
 
-        {/* Filter & Search Bar */}
         <div className="filters-section">
           <form onSubmit={handleSearchSubmit} className="search-form">
             <input 
@@ -98,7 +89,6 @@ const AdminDashboard = () => {
           </select>
         </div>
 
-        {/* Admin Ticket Table */}
         {loading ? (
           <p>Loading admin data...</p>
         ) : (

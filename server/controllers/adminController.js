@@ -1,8 +1,4 @@
 const Ticket = require('../models/Ticket');
-
-// @desc    Get all tickets with filters & search
-// @route   GET /api/admin/tickets
-// @access  Private/Admin
 const getAllTickets = async (req, res) => {
   try {
     const { status, priority, search } = req.query;
@@ -24,9 +20,6 @@ const getAllTickets = async (req, res) => {
   }
 };
 
-// @desc    Update any ticket status
-// @route   PUT /api/admin/tickets/:id
-// @access  Private/Admin
 const updateTicketStatus = async (req, res) => {
   try {
     const { status } = req.body;
@@ -51,9 +44,6 @@ const updateTicketStatus = async (req, res) => {
   }
 };
 
-// @desc    Get ticket statistics
-// @route   GET /api/admin/stats
-// @access  Private/Admin
 const getTicketStats = async (req, res) => {
   try {
     const total = await Ticket.countDocuments();

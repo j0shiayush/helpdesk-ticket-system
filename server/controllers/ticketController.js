@@ -1,8 +1,4 @@
 const Ticket = require('../models/Ticket');
-
-// @desc    Create a support ticket
-// @route   POST /api/tickets
-// @access  Private
 const createTicket = async (req, res) => {
   try {
     const { title, description, category, priority } = req.body;
@@ -26,9 +22,6 @@ const createTicket = async (req, res) => {
   }
 };
 
-// @desc    Get user's tickets
-// @route   GET /api/tickets
-// @access  Private
 const getTickets = async (req, res) => {
   try {
     const tickets = await Ticket.find({ user_id: req.user._id }).sort({ createdAt: -1 });
@@ -38,9 +31,6 @@ const getTickets = async (req, res) => {
   }
 };
 
-// @desc    Get single ticket
-// @route   GET /api/tickets/:id
-// @access  Private
 const getTicket = async (req, res) => {
   try {
     const ticket = await Ticket.findById(req.params.id);
@@ -49,7 +39,6 @@ const getTicket = async (req, res) => {
       return res.status(404).json({ message: 'Ticket not found' });
     }
 
-    // Ensure the user owns the ticket
     if (ticket.user_id.toString() !== req.user._id.toString()) {
       return res.status(401).json({ message: 'Not authorized to access this ticket' });
     }
@@ -60,9 +49,6 @@ const getTicket = async (req, res) => {
   }
 };
 
-// @desc    Update ticket
-// @route   PUT /api/tickets/:id
-// @access  Private
 const updateTicket = async (req, res) => {
   try {
     let ticket = await Ticket.findById(req.params.id);
@@ -86,9 +72,6 @@ const updateTicket = async (req, res) => {
   }
 };
 
-// @desc    Delete ticket
-// @route   DELETE /api/tickets/:id
-// @access  Private
 const deleteTicket = async (req, res) => {
   try {
     const ticket = await Ticket.findById(req.params.id);

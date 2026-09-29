@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../api/axios';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
@@ -26,7 +26,7 @@ const Dashboard = () => {
     if (window.confirm('Are you sure you want to delete this ticket?')) {
       try {
         await api.delete(`/tickets/${id}`);
-        fetchTickets(); // Refresh the list
+        fetchTickets(); 
       } catch (error) {
         console.error("Error deleting ticket", error);
       }

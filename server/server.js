@@ -12,10 +12,7 @@ connectDB();
 const app = express();
 
 // Middleware - MUST BE BEFORE ROUTES
-app.use(cors({
-    origin: 'http://localhost:5173', // Allow your React frontend
-    credentials: true
-}));
+app.use(cors());
 app.use(express.json());
 
 // Mount Routes

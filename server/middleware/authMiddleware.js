@@ -1,7 +1,5 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-
-// Protect routes: verify JWT Bearer token
 const protect = async (req, res, next) => {
   let token;
 
@@ -12,10 +10,8 @@ const protect = async (req, res, next) => {
     try {
       token = req.headers.authorization.split(' ')[1];
 
-      // Decode and verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      // Attach user object (excluding password hash) to request
       req.user = await User.findById(decoded.id).select('-password_hash');
 
       if (!req.user) {
@@ -33,7 +29,6 @@ const protect = async (req, res, next) => {
   }
 };
 
-// Authorize roles (e.g., admin check)
 const authorize = (...roles) => {
   return (req, res, next) => {
     if (!req.user || !roles.includes(req.user.role)) {
